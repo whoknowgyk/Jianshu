@@ -1,0 +1,3 @@
+export const GET_WRITER_LIST='home/GET_WRITER_LIST';
+export const CHANGE_WRITER_LIST='home/CHANGE_WRITER_LIST';
+export const TOGGLE_SCROLL_SHOW='home/TOGGLE_SCROLL_SHOW';

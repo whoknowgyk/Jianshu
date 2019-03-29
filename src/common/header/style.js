@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import logoPic from '../../statics/logo.png'
 
 export const HeaderWrapper = styled.div`
+    z-index: 1;
     position: relative;
     height: 56px;
     border-bottom: 1px solid #f0f0f0;
@@ -10,9 +11,7 @@ export const HeaderWrapper = styled.div`
 
 // 注意这里的logo图片引入方法，不能使用传统的url方式进行引入，因为webpack在打包的时候并非依照项目的路径
 // 需要使用import进行引入，然后再使用$符+{}的形式进行引用
-export const Logo = styled.a.attrs({
-    href:'/',
-})`
+export const Logo = styled.div`
     position: absolute;
     top: 0;
     left: 0;
@@ -118,6 +117,7 @@ export const SearchInfo = styled.div`
     padding: 20px 20px;
     box-sizing: border-box;
     //background: papayawhip;
+    background: #fff;
     box-shadow: 0 0 8px rgba(0,0,0,.2);
 `;
 

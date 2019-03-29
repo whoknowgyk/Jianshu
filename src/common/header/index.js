@@ -1,7 +1,9 @@
-import React , { Component }from 'react';
+import React , { PureComponent }from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from "react-redux";
 import { actionCreators } from './store';
+import { actionCreators as loginActionCreators } from '../../pages/login/store';
+import { Link } from 'react-router-dom';
 import {
     HeaderWrapper,
     Logo,
@@ -19,7 +21,7 @@ import {
 } from './style';
 
 
-class Header extends Component{
+class Header extends PureComponent{
 
     // 展示热门搜索框
     getListArea() {
@@ -69,12 +71,19 @@ class Header extends Component{
     render() {
         return(
             <HeaderWrapper>
-                <Logo />
+                <Link to='/'>
+                    <Logo />
+                </Link>
                 <Nav>
                     <NavItem className='left active'>首页</NavItem>
                     <NavItem className='left'>下载App</NavItem>
                     {/*注意这里的顺序，登录在前，Aa在后，因为靠右浮动，所以实际效果出来是Aa在前，登录在后*/}
-                    <NavItem className='right'>登录</NavItem>
+                    {
+                        this.props.login?
+                            <NavItem className='right' onClick={this.props.logOut}>退出</NavItem>:
+                            <Link to='./login'><NavItem className='right'>登录</NavItem></Link>
+                    }
+
                     <NavItem className='right'>
                         <span className="iconfont">&#xe636;</span>
                     </NavItem>
@@ -98,10 +107,12 @@ class Header extends Component{
                     </SearchWrapper>
                 </Nav>
                 <Addition>
-                    <Button className='writing'>
-                        <span className="iconfont">&#xe69b;</span>
-                        写文章
-                    </Button>
+                    <Link to='/write'>
+                        <Button className='writing'>
+                            <span className="iconfont">&#xe69b;</span>
+                            写文章
+                        </Button>
+                    </Link>
                     <Button className='reg'>注册</Button>
                 </Addition>
             </HeaderWrapper>
@@ -121,6 +132,7 @@ const mapStateToProps = (state) => {
         page: state.get('header').get('page'),
         totalPage: state.get('header').get('totalPage'),
         mouseIn: state.get('header').get('mouseIn'),
+        login: state.get('login').get('login'),
     }
 };
 
@@ -168,6 +180,10 @@ const mapDispatchToProps = (dispatch) => {
             }
             spinIcon.style.transform='rotate('+(originAngle+360)+'deg)';
         },
+        logOut(){
+            // 应该用login的actionCreators
+            dispatch(loginActionCreators.logOut());
+        }
     }
 };
 
